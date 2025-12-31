@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'screens/dashboard.dart';
-import 'screens/add_vaccination.dart';
-import 'services/notification_service.dart';
+import 'package:mobile_app/screens/dashboard.dart';
+import 'package:mobile_app/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.init(); // initialize notifications
+  await NotificationService.init(); // initialize notifications and timezones
   runApp(VaccinationApp());
 }
 
 class VaccinationApp extends StatelessWidget {
+  const VaccinationApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Vaccination Tracker",
-      theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: "/",
-      routes: {
-        "/": (context) => Dashboard(),
-        "/add": (context) => AddVaccination(),
-      },
+      title: 'Vaccination Tracker',
+      theme: ThemeData(
+        fontFamily: 'NotoSans', // ✅ custom font applied here
+        primarySwatch: Colors.blue,
+      ),
+      home: Dashboard(), // ✅ your main screen
+      debugShowCheckedModeBanner: false,
     );
   }
 }

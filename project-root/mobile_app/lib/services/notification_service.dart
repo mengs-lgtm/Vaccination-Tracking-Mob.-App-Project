@@ -3,10 +3,15 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
+  // Global instance of the plugin
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  /// Initialize notification settings
   static Future<void> init() async {
+    // Initialize timezones
+    tz.initializeTimeZones();
+
     const AndroidInitializationSettings androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -14,11 +19,10 @@ class NotificationService {
       android: androidSettings,
     );
 
-    tz.initializeTimeZones();
-
     await _notificationsPlugin.initialize(settings);
   }
 
+  /// Show an immediate notification
   static Future<void> showNotification({
     required String title,
     required String body,
@@ -40,7 +44,8 @@ class NotificationService {
     await _notificationsPlugin.show(id, title, body, details);
   }
 
-  Future<void> scheduleNotification({
+  /// Schedule a notification for a future date/time
+  static Future<void> scheduleNotification({
     required int id,
     required String title,
     required String body,
@@ -66,8 +71,6 @@ class NotificationService {
       tz.TZDateTime.from(scheduledDate, tz.local),
       details,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
   }

@@ -59,7 +59,7 @@ class _AddVaccinationState extends State<AddVaccination> {
                     await NotificationService.scheduleNotification(
                       id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
                       title: "Upcoming Vaccination",
-                      body: "$vaccineName is due on $nextDueDate",
+                      body: "${vaccineName} is due on $nextDueDate",
                       scheduledDate: dueDate.subtract(
                         Duration(days: 1),
                       ), // remind 1 day before
